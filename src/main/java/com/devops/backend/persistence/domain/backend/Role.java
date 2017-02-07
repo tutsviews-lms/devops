@@ -21,6 +21,10 @@ public class Role implements Serializable{
 
     private String name;
 
+
+    @OneToMany(mappedBy = "role" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<UserRole> userRoles = new HashSet<>();
+
     /**
      * Full contructeur
      * @param roleEnum
@@ -29,9 +33,6 @@ public class Role implements Serializable{
         this.id= roleEnum.getId();
         this.name =roleEnum.getRoleName();
     }
-
-    @OneToMany(mappedBy = "role" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<UserRole> userRoles = new HashSet<>();
 
     public Role() {
     }

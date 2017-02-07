@@ -73,7 +73,7 @@ public class RepositoriesIntegrationTest extends AbstractTest {
         Role basicRole = createBasicRole(RoleEnum.BASIC);
 
         Set<UserRole> userRoles = new HashSet<>();
-        UserRole userRole = createUserRole(basicUser,basicRole);
+        UserRole userRole = new UserRole(basicUser,basicRole);
         userRoles.add(userRole);
 
         for (UserRole userRoleElement : userRoles){
@@ -128,12 +128,6 @@ public class RepositoriesIntegrationTest extends AbstractTest {
         return user;
     }
 
-    private UserRole createUserRole(User user, Role role){
-        UserRole userRole = new UserRole();
-        userRole.setUser(user);
-        userRole.setRole(role);
 
-        return userRole;
-    }
 
 }
