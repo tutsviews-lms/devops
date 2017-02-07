@@ -4,6 +4,7 @@ import com.devops.integration.RepositoriesIntegrationTest;
 import com.devops.service.I18NServiceTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
 
