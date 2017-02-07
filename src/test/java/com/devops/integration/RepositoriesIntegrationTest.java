@@ -10,6 +10,7 @@ import com.devops.backend.persistence.repositories.RoleRepository;
 import com.devops.backend.persistence.repositories.UserRepository;
 import com.devops.enums.PlanEnum;
 import com.devops.enums.RoleEnum;
+import com.devops.utils.UsersUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -67,7 +68,7 @@ public class RepositoriesIntegrationTest extends AbstractTest {
         Plan basicPlan = createBasicPlan(PlanEnum.BASIC);
         planRepository.save(basicPlan);
 
-        User basicUser = createBasicUser();
+        User basicUser = UsersUtils.createBasicUser();
         basicUser.setPlan(basicPlan);
 
         Role basicRole = createBasicRole(RoleEnum.BASIC);
@@ -111,22 +112,7 @@ public class RepositoriesIntegrationTest extends AbstractTest {
         return new Role(roleEnum);
     }
 
-    private User createBasicUser(){
 
-        User user = new User();
-        user.setUsername("Aladin");
-        user.setPassword("secret");
-        user.setEmail("secret@gmail.com");
-        user.setFirstName("Aladin");
-        user.setLastName("Zaier");
-        user.setPhoneNumber("0606060606");
-        user.setCountry("FR");
-        user.setEnabled(true);
-        user.setDescription("A basic user");
-        user.setProfileImageUrl("https://blabla.images.com/123");
-
-        return user;
-    }
 
 
 
