@@ -1,29 +1,18 @@
 package com.devops;
 
-import com.devops.backend.service.I18NService;
-import org.junit.Assert;
-import org.junit.Test;
+import com.devops.integration.RepositoriesIntegrationTest;
+import com.devops.service.I18NServiceTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-@RunWith(SpringRunner.class)
+@RunWith(Suite.class)
 @SpringBootTest
+@WebAppConfiguration
+@Suite.SuiteClasses({ RepositoriesIntegrationTest.class, I18NServiceTest.class})
 public class DevopsApplicationTests {
 
-	@Autowired
-	I18NService i18NService;
-
-	@Test
-	public void i18nService_should_return_right_message_from_an_idMessage() {
-		String messageId = "index.main.collout";
-		String messageValue = "Bootstrap starter template";
-		Assert.assertEquals(messageValue, i18NService.getMessage(messageId));
-	}
 
 }
