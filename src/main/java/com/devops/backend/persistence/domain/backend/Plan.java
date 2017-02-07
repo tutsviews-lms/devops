@@ -1,5 +1,7 @@
 package com.devops.backend.persistence.domain.backend;
 
+import com.devops.enums.PlanEnum;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
@@ -19,6 +21,15 @@ public class Plan implements Serializable{
     String name;
 
     public Plan() {
+    }
+
+    /**
+     * Full Constructor
+     * @param planEnum
+     */
+    public Plan(PlanEnum planEnum){
+        this.id = planEnum.getId();
+        this.name = planEnum.getNamePlan();
     }
 
     public int getId() {
