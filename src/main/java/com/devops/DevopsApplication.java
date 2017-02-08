@@ -6,7 +6,7 @@ import com.devops.backend.persistence.domain.backend.UserRole;
 import com.devops.backend.service.UserService;
 import com.devops.enums.PlanEnum;
 import com.devops.enums.RoleEnum;
-import com.devops.utils.UsersUtils;
+import com.devops.utils.UserUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -41,7 +40,7 @@ public class DevopsApplication extends SpringBootServletInitializer implements C
 	public void run(String... strings) throws Exception {
 		LOG.info("Application Name : {}", applicationName);
 
-        User basicUser = UsersUtils.createBasicUser();
+        User basicUser = UserUtils.createBasicUser();
         Set<UserRole> userRoles = new HashSet<>();
         UserRole userRole = new UserRole(basicUser, new Role(RoleEnum.BASIC));
         userRoles.add(userRole);

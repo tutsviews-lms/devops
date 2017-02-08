@@ -10,7 +10,7 @@ import com.devops.backend.persistence.repositories.RoleRepository;
 import com.devops.backend.persistence.repositories.UserRepository;
 import com.devops.enums.PlanEnum;
 import com.devops.enums.RoleEnum;
-import com.devops.utils.UsersUtils;
+import com.devops.utils.UserUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -63,12 +63,48 @@ public class RepositoriesIntegrationTest extends AbstractTest {
     }
 
     @Test
-    public void test_new_user(){
+    public void test_new_user() throws Exception{
+
+        User basicUser = createUser();
+
+        User newlyCreatedUser = userRepository.findOne(basicUser.getId());
+
+        Assert.assertNotNull(newlyCreatedUser);
+        Assert.assertTrue(newlyCreatedUser.getId() != 0);
+        Assert.assertNotNull(newlyCreatedUser.getPlan());
+        Assert.assertNotNull(newlyCreatedUser.getPlan().getId());
+        Set<UserRole> newlyCreatedUserRoles = newlyCreatedUser.getUserRoles();
+        for (UserRole userRoleElement :newlyCreatedUserRoles) {
+            Assert.assertNotNull(userRoleElement.getRole());
+            Assert.assertNotNull(userRoleElement.getRole().getId());
+        }
+    }
+
+    @Test
+    public void test_deleteUser()throws Exception{
+
+        User basicUser = createUser();
+        userRepository.delete(basicUser.getId());
+
+    }
+
+/* Private methods */
+
+    private Plan createBasicPlan(PlanEnum planEnum){
+        return new Plan(planEnum);
+    }
+
+    private Role createBasicRole(RoleEnum roleEnum){
+        return new Role(roleEnum);
+    }
+
+
+    private User createUser(){
 
         Plan basicPlan = createBasicPlan(PlanEnum.BASIC);
         planRepository.save(basicPlan);
 
-        User basicUser = UsersUtils.createBasicUser();
+        User basicUser = UserUtils.createBasicUser();
         basicUser.setPlan(basicPlan);
 
         Role basicRole = createBasicRole(RoleEnum.BASIC);
@@ -84,34 +120,9 @@ public class RepositoriesIntegrationTest extends AbstractTest {
         basicUser.getUserRoles().addAll(userRoles);
 
         basicUser = userRepository.save(basicUser);
-        User newlyCreatedUser = userRepository.findOne(basicUser.getId());
 
-        Assert.assertNotNull(newlyCreatedUser);
-        Assert.assertTrue(newlyCreatedUser.getId() != 0);
-        Assert.assertNotNull(newlyCreatedUser.getPlan());
-        Assert.assertNotNull(newlyCreatedUser.getPlan().getId());
-        Set<UserRole> newlyCreatedUserRoles = newlyCreatedUser.getUserRoles();
-        for (UserRole userRoleElement :newlyCreatedUserRoles) {
-            Assert.assertNotNull(userRoleElement.getRole());
-            Assert.assertNotNull(userRoleElement.getRole().getId());
-        }
-
-
-
+        return basicUser;
     }
-
-
-
-/* Private methods */
-
-    private Plan createBasicPlan(PlanEnum planEnum){
-        return new Plan(planEnum);
-    }
-
-    private Role createBasicRole(RoleEnum roleEnum){
-        return new Role(roleEnum);
-    }
-
 
 
 

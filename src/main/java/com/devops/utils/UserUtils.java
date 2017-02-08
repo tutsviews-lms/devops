@@ -5,9 +5,9 @@ import com.devops.backend.persistence.domain.backend.User;
 /**
  * Created by ALadin Zaier PC IBS on 07/02/2017.
  */
-public class UsersUtils {
+public class UserUtils {
 
-    private UsersUtils() {
+    private UserUtils() {
         throw new AssertionError("Non instansiable");
     }
 
