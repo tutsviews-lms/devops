@@ -44,7 +44,7 @@ public class DevopsApplication extends SpringBootServletInitializer implements C
         Set<UserRole> userRoles = new HashSet<>();
         UserRole userRole = new UserRole(basicUser, new Role(RoleEnum.BASIC));
         userRoles.add(userRole);
-        LOG.info("Creating useer with value {} as username",basicUser.getUsername());
+        LOG.info("Creating user with value {} as username",basicUser.getUsername());
         User user = userService.createUser(basicUser, PlanEnum.BASIC,userRoles);
         LOG.info("User with value {} as username created",basicUser.getUsername());
 

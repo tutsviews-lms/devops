@@ -10,6 +10,7 @@ import com.devops.backend.persistence.repositories.UserRepository;
 import com.devops.enums.PlanEnum;
 import com.devops.enums.RoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,16 +24,22 @@ import java.util.Set;
 public class UserService {
 
     @Autowired
-    PlanRepository planRepository;
+    private PlanRepository planRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Transactional
     public User createUser(User user, PlanEnum planEnum, Set<UserRole> userRoles){
+
+        String encryptedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encryptedPassword);
 
         Plan plan = new Plan(planEnum);
 
