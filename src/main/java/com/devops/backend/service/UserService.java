@@ -64,4 +64,27 @@ public class UserService implements IUserService {
 
     }
 
+    @Override
+    @Transactional
+    public Boolean deleteUser(User user) {
+
+        if (userRepository.findOne(user.getId())==null) {
+            return false;
+        }else {
+            userRepository.delete(user.getId());
+
+            return true;
+        }
+    }
+
+    @Override
+    public Boolean existUserWithUserNameOrEmail(String userName, String email) {
+
+        if (!(userRepository.findUserByUsername(userName) ==null)) { return true; }
+
+        if (!(userRepository.findUserByEmail(email) ==null)) { return true; }
+
+        return false;
+    }
+
 }

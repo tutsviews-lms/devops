@@ -12,6 +12,14 @@ import java.util.Set;
  * Created by ALadin Zaier PC IBS on 13/02/2017.
  */
 public interface IUserService {
+
     @Transactional
     User createUser(User user, PlanEnum planEnum, Set<UserRole> userRoles);
+
+    @Transactional
+    Boolean deleteUser(User user);
+
+    @Transactional
+    Boolean existUserWithUserNameOrEmail(String userName, String email);
+
 }

@@ -18,4 +18,6 @@ public interface UserRepository extends CrudRepository<User,Long> {
      */
     public User findUserByUsername(String username);
 
+    public User findUserByEmail(String email);
+
 }

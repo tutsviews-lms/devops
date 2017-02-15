@@ -13,7 +13,9 @@ import com.devops.enums.RoleEnum;
 import com.devops.utils.UserUtils;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
@@ -32,6 +34,9 @@ public class RepositoriesIntegrationTest extends AbstractTest {
 
     @Autowired
     private PlanRepository planRepository;
+
+    @Rule
+    public TestName testName = new TestName();
 
 
     @Before
@@ -65,7 +70,10 @@ public class RepositoriesIntegrationTest extends AbstractTest {
     @Test
     public void test_new_user() throws Exception{
 
-        User basicUser = createUser();
+        String userName = testName.getMethodName();
+        String email = testName.getMethodName()+"@tutsviews.com";
+
+        User basicUser = createUser(userName,email);
 
         User newlyCreatedUser = userRepository.findOne(basicUser.getId());
 
@@ -78,12 +86,17 @@ public class RepositoriesIntegrationTest extends AbstractTest {
             Assert.assertNotNull(userRoleElement.getRole());
             Assert.assertNotNull(userRoleElement.getRole().getId());
         }
+
+        userRepository.delete(basicUser.getId());
     }
 
     @Test
     public void test_deleteUser()throws Exception{
 
-        User basicUser = createUser();
+        String userName = testName.getMethodName();
+        String email = testName.getMethodName()+"@tutsviews.com";
+
+        User basicUser = createUser(userName,email);
         userRepository.delete(basicUser.getId());
 
     }
@@ -99,12 +112,12 @@ public class RepositoriesIntegrationTest extends AbstractTest {
     }
 
 
-    private User createUser(){
+    private User createUser(String userName, String email){
 
         Plan basicPlan = createBasicPlan(PlanEnum.BASIC);
         planRepository.save(basicPlan);
 
-        User basicUser = UserUtils.createBasicUser();
+        User basicUser = UserUtils.createBasicUser(userName,email);
         basicUser.setPlan(basicPlan);
 
         Role basicRole = createBasicRole(RoleEnum.BASIC);

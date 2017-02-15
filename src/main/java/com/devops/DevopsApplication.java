@@ -43,7 +43,12 @@ public class DevopsApplication extends SpringBootServletInitializer implements C
     public void run(String... strings) throws Exception {
         LOG.info("Application Name : {}", applicationName);
 
-        User basicUser = UserUtils.createBasicUser();
+        String userName = "Aladin";
+        String email ="aladin@tutsviews.com";
+
+        if (!userService.existUserWithUserNameOrEmail(userName,email)) {
+
+        User basicUser = UserUtils.createBasicUser(userName,email);
         Set<UserRole> userRoles = new HashSet<>();
         UserRole userRole = new UserRole(basicUser, new Role(RoleEnum.BASIC));
         userRoles.add(userRole);
@@ -51,7 +56,7 @@ public class DevopsApplication extends SpringBootServletInitializer implements C
         User user = userService.createUser(basicUser, PlanEnum.BASIC, userRoles);
         LOG.info("User with value {} as username created", basicUser.getUsername());
 
-
+        }
 
     }
 

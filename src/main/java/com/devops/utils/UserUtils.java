@@ -16,12 +16,12 @@ public class UserUtils {
      * Create a user with basic attributes set
      * @return
      */
-    public static User createBasicUser(){
+    public static User createBasicUser(String userName, String email){
 
         User user = new User();
-        user.setUsername("Aladin");
+        user.setUsername(userName);
         user.setPassword("secret");
-        user.setEmail("secret@gmail.com");
+        user.setEmail(email);
         user.setFirstName("Aladin");
         user.setLastName("Zaier");
         user.setPhoneNumber("0606060606");
