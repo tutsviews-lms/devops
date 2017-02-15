@@ -4,7 +4,7 @@ import com.devops.AbstractTest;
 import com.devops.backend.persistence.domain.backend.Role;
 import com.devops.backend.persistence.domain.backend.User;
 import com.devops.backend.persistence.domain.backend.UserRole;
-import com.devops.backend.service.UserService;
+import com.devops.backend.service.IUserService;
 import com.devops.enums.PlanEnum;
 import com.devops.enums.RoleEnum;
 import com.devops.utils.UserUtils;
@@ -21,7 +21,7 @@ import java.util.Set;
 public class UserServiceIntegrationTest extends AbstractTest {
 
     @Autowired
-    private UserService userService;
+    private IUserService IUserService;
 
     @Test
     public void testCreateduser(){
@@ -31,7 +31,7 @@ public class UserServiceIntegrationTest extends AbstractTest {
         UserRole userRole = new UserRole(basicUser, new Role(RoleEnum.BASIC));
         userRoles.add(userRole);
 
-        User user = userService.createUser(basicUser, PlanEnum.BASIC,userRoles);
+        User user = IUserService.createUser(basicUser, PlanEnum.BASIC,userRoles);
 
         Assert.assertNotNull(user);
         Assert.assertNotNull(user.getId());

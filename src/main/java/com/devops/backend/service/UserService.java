@@ -1,14 +1,13 @@
 package com.devops.backend.service;
 
 import com.devops.backend.persistence.domain.backend.Plan;
-import com.devops.backend.persistence.domain.backend.Role;
 import com.devops.backend.persistence.domain.backend.User;
 import com.devops.backend.persistence.domain.backend.UserRole;
 import com.devops.backend.persistence.repositories.PlanRepository;
 import com.devops.backend.persistence.repositories.RoleRepository;
 import com.devops.backend.persistence.repositories.UserRepository;
 import com.devops.enums.PlanEnum;
-import com.devops.enums.RoleEnum;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,7 @@ import java.util.Set;
  */
 @Service
 @Transactional(readOnly = true)
-public class UserService {
+public class UserService implements IUserService {
 
     @Autowired
     private PlanRepository planRepository;
@@ -35,6 +34,7 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    @Override
     @Transactional
     public User createUser(User user, PlanEnum planEnum, Set<UserRole> userRoles){
 
