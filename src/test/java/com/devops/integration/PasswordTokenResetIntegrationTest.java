@@ -23,11 +23,6 @@ import java.util.UUID;
 
 public class PasswordTokenResetIntegrationTest extends AbstractIntegrationTest{
 
-    @Autowired
-    private PasswordResetTokenRepository passwordResetTokenRepository;
-
-    @Value("${token.expiration.length.minutes}")
-    private int expirationTimeInMinutes;
 
     @Rule
     public TestName testName = new TestName();
@@ -154,14 +149,4 @@ public class PasswordTokenResetIntegrationTest extends AbstractIntegrationTest{
 
 
 
-    //------------------> Private methods
-
-    private PasswordResetToken createPasswordResetToken(String token, User user, LocalDateTime now) {
-
-        PasswordResetToken passwordResetToken = new PasswordResetToken(token, user, now, expirationTimeInMinutes);
-        passwordResetTokenRepository.save(passwordResetToken);
-        Assert.assertNotNull(passwordResetToken.getId());
-        return passwordResetToken;
-
-    }
 }
