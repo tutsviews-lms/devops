@@ -35,6 +35,15 @@ public class DevopsApplication extends SpringBootServletInitializer implements C
     @Autowired
     IUserService userService;
 
+    @Value("${webmaster.username}")
+    private String webmasterUsername;
+
+    @Value("${webmaster.password}")
+    private String webmasterPassword;
+
+    @Value("${webmaster.email}")
+    private String webmasterEmail;
+
     public static void main(String[] args) {
         SpringApplication.run(DevopsApplication.class, args);
     }
@@ -42,19 +51,21 @@ public class DevopsApplication extends SpringBootServletInitializer implements C
     @Override
     public void run(String... strings) throws Exception {
         LOG.info("Application Name : {}", applicationName);
+        LOG.info("WebMaster username : {}", webmasterUsername);
+        LOG.info("Webmaster password : {}", webmasterPassword);
+        LOG.info("Webmaster email : {}", webmasterEmail);
 
-        String userName = "Aladin";
-        String email ="aladin@tutsviews.com";
+        if (!userService.existUserWithUserNameOrEmail(webmasterUsername,webmasterEmail)) {
 
-        if (!userService.existUserWithUserNameOrEmail(userName,email)) {
+        User user = UserUtils.createBasicUser(webmasterUsername,webmasterEmail);
+            user.setPassword(webmasterPassword);
 
-        User basicUser = UserUtils.createBasicUser(userName,email);
         Set<UserRole> userRoles = new HashSet<>();
-        UserRole userRole = new UserRole(basicUser, new Role(RoleEnum.BASIC));
+        UserRole userRole = new UserRole(user, new Role(RoleEnum.ADMIN));
         userRoles.add(userRole);
-        LOG.info("Creating user with value {} as username", basicUser.getUsername());
-        User user = userService.createUser(basicUser, PlanEnum.BASIC, userRoles);
-        LOG.info("User with value {} as username created", basicUser.getUsername());
+        LOG.info("Creating user with value {} as username", user.getUsername());
+        userService.createUser(user, PlanEnum.PRO, userRoles);
+        LOG.info("User with value {} as username created", user.getUsername());
 
         }
 
