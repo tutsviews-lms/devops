@@ -50,6 +50,13 @@ public class PasswordResetToken implements Serializable {
     public PasswordResetToken() {
     }
 
+    /**
+     * Full constructor
+     * @param token
+     * @param user
+     * @param expiryDate
+     * @param expirationInMinutes
+     */
     public PasswordResetToken(String token, User user, LocalDateTime expiryDate,int expirationInMinutes) {
 
         if (token == null || user ==null || expiryDate == null) {
