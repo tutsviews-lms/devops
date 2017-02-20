@@ -75,8 +75,21 @@ public class User implements Serializable, UserDetails{
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<UserRole> userRoles = new HashSet<>();
 
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    Set<PasswordResetToken> passwordResetTokens = new HashSet<>();
+
     public Set<UserRole> getUserRoles() {
         return userRoles;
+    }
+
+
+    public Set<PasswordResetToken> getPasswordResetTokens() {
+        return passwordResetTokens;
+    }
+
+    public void setPasswordResetTokens(Set<PasswordResetToken> passwordResetTokens) {
+        this.passwordResetTokens = passwordResetTokens;
     }
 
     public void setUserRoles(Set<UserRole> userRoles) {

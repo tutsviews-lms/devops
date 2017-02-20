@@ -36,7 +36,7 @@ public class DevopsApplication extends SpringBootServletInitializer implements C
     IUserService userService;
 
     @Value("${webmaster.username}")
-    private String webmasterUsername;
+    private String webmasterUsername ;
 
     @Value("${webmaster.password}")
     private String webmasterPassword;
