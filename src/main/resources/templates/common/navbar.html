@@ -20,7 +20,7 @@
                 <li class="active"><a th:text="#{navbar.home.text}" href="/"></a></li>
                 <li><a th:text="#{navbar.about.text}" href="/about"></a></li>
                 <li><a th:text="#{navbar.contact.text}" href="/contact"></a></li>
-            </ul>
+            </ul>²
 
             <ul class="nav navbar-nav navbar-right">
                 <li th:if="${#authorization.expression('!isAuthenticated()')}">

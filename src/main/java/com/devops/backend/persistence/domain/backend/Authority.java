@@ -1,6 +1,6 @@
 package com.devops.backend.persistence.domain.backend;
 
-import org.springframework.security.core.GrantedAuthority;
+        import org.springframework.security.core.GrantedAuthority;
 
 /**
  * Created by ALadin Zaier PC IBS on 08/02/2017.

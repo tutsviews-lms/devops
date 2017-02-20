@@ -230,7 +230,7 @@ public class User implements Serializable, UserDetails{
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         userRoles.forEach(ur -> grantedAuthorities.add(new Authority(ur.getRole().getName())));
 
-        return null;
+        return grantedAuthorities;
     }
 
 }
