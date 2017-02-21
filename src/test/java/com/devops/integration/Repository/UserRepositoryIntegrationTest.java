@@ -1,4 +1,4 @@
-package com.devops.integration;
+package com.devops.integration.Repository;
 
 import com.devops.backend.persistence.domain.backend.Plan;
 import com.devops.backend.persistence.domain.backend.Role;
@@ -18,7 +18,7 @@ import java.util.Set;
 /**
  * Created by ALadin Zaier PC IBS on 07/02/2017.
  */
-public class UserIntegrationTest extends AbstractIntegrationTest {
+public class UserRepositoryIntegrationTest extends AbstractRepositoryIntegrationTest {
 
 
 
@@ -88,8 +88,18 @@ public class UserIntegrationTest extends AbstractIntegrationTest {
 
     }
 
-/* Private methods */
+    @Test
+    public void findUserByEmail_should_return_a_user_with_an_email_entrie(){
 
+        User user = createUser(testName);
+        User returnedUser = userRepository.findUserByEmail(testName.getMethodName()+"@tutsviews.com");
+
+        Assert.assertNotNull(returnedUser);
+        Assert.assertNotNull(returnedUser.getId());
+        Assert.assertEquals(user.getId(),returnedUser.getId());
+
+
+    }
 
 
 

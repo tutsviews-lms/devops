@@ -1,4 +1,4 @@
-package com.devops.integration;
+package com.devops.integration.Repository;
 
 import  com.devops.AbstractTest;
 import com.devops.backend.persistence.domain.backend.Role;

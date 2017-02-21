@@ -1,4 +1,4 @@
-package com.devops.integration;
+package com.devops.integration.Repository;
 
 import com.devops.AbstractTest;
 import com.devops.backend.persistence.domain.backend.PasswordResetToken;
@@ -26,7 +26,7 @@ import java.util.Set;
 /**
  * Created by ALadin Zaier PC IBS on 20/02/2017.
  */
-public abstract class AbstractIntegrationTest extends AbstractTest{
+public abstract class AbstractRepositoryIntegrationTest extends AbstractTest{
 
 
     @Autowired

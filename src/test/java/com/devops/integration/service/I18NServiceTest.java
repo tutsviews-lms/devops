@@ -1,4 +1,4 @@
-package com.devops.service;
+package com.devops.integration.service;
 
 import com.devops.AbstractTest;
 import com.devops.backend.service.I18NService;

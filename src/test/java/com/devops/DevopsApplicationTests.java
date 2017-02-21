@@ -1,10 +1,9 @@
 package com.devops;
 
-import com.devops.integration.UserIntegrationTest;
-import com.devops.integration.UserServiceIntegrationTest;
-import com.devops.integration.PasswordTokenResetIntegrationTest;
-import com.devops.service.I18NServiceTest;
-import com.devops.service.UserServiceTest;
+import com.devops.integration.Repository.UserRepositoryIntegrationTest;
+import com.devops.integration.Repository.PasswordTokenResetRepositoryIntegrationTest;
+import com.devops.integration.service.I18NServiceTest;
+import com.devops.integration.service.UserServiceIntegrationTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -18,8 +17,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @WebAppConfiguration
 @ContextConfiguration
 @ActiveProfiles(profiles={"test"})
-@Suite.SuiteClasses({ UserIntegrationTest.class, I18NServiceTest.class, UserServiceIntegrationTest.class,
-        UserServiceTest.class, PasswordTokenResetIntegrationTest.class})
+@Suite.SuiteClasses({ UserRepositoryIntegrationTest.class, I18NServiceTest.class, com.devops.integration.Repository.UserServiceIntegrationTest.class,
+        UserServiceIntegrationTest.class, PasswordTokenResetRepositoryIntegrationTest.class})
 public class DevopsApplicationTests {
 
 
