@@ -6,8 +6,7 @@ import com.devops.backend.persistence.domain.backend.Role;
 import com.devops.backend.persistence.domain.backend.User;
 import com.devops.backend.persistence.domain.backend.UserRole;
 import com.devops.backend.persistence.repositories.PasswordResetTokenRepository;
-import com.devops.backend.service.IUserService;
-import com.devops.backend.service.PasswordResetTokenService;
+import com.devops.backend.service.contract.IUserService;
 import com.devops.enums.PlanEnum;
 import com.devops.enums.RoleEnum;
 import com.devops.utils.UserUtils;
@@ -31,9 +30,6 @@ public class AbstractServiceIntegrationTest extends AbstractTest {
 
     @Autowired
     protected IUserService iUserService ;
-
-    @Autowired
-    protected PasswordResetTokenService passwordResetTokenService;
 
     @Autowired
     protected PasswordResetTokenRepository passwordResetTokenRepository;

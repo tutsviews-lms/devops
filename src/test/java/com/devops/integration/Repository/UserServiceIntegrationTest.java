@@ -4,7 +4,7 @@ import  com.devops.AbstractTest;
 import com.devops.backend.persistence.domain.backend.Role;
 import com.devops.backend.persistence.domain.backend.User;
 import com.devops.backend.persistence.domain.backend.UserRole;
-import com.devops.backend.service.IUserService;
+import com.devops.backend.service.contract.IUserService;
 import com.devops.enums.PlanEnum;
 import com.devops.enums.RoleEnum;
 import com.devops.utils.UserUtils;

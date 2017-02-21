@@ -2,11 +2,13 @@ package com.devops.integration.service;
 
 import com.devops.backend.persistence.domain.backend.PasswordResetToken;
 import com.devops.backend.persistence.domain.backend.User;
+import com.devops.backend.service.PasswordResetTokenService;
 
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
 
@@ -15,7 +17,9 @@ import java.util.UUID;
  */
 public class PasswordResetTokenServiceIntegrationTest extends AbstractServiceIntegrationTest {
 
-//    findByToken createPasswordResetTokenFromEmail
+
+    @Autowired
+    private PasswordResetTokenService passwordResetTokenService;
 
     @Rule
     public TestName testName = new TestName();

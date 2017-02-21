@@ -1,4 +1,4 @@
-package com.devops.backend.service;
+package com.devops.backend.service.contract;
 
 import com.devops.backend.persistence.domain.backend.User;
 import com.devops.backend.persistence.domain.backend.UserRole;
@@ -11,6 +11,7 @@ import java.util.Set;
 /**
  * Created by ALadin Zaier PC IBS on 13/02/2017.
  */
+@Transactional(readOnly = true)
 public interface IUserService {
 
     @Transactional
@@ -19,7 +20,9 @@ public interface IUserService {
     @Transactional
     Boolean deleteUser(User user);
 
-    @Transactional
     Boolean existUserWithUserNameOrEmail(String userName, String email);
+
+    @Transactional
+    User upadateUserPassword(long userId, String newPassword);
 
 }

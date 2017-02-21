@@ -7,6 +7,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
+import java.util.UUID;
+
 /**
  * Created by ALadin Zaier PC IBS on 15/02/2017.
  */
@@ -38,6 +40,28 @@ public class UserServiceIntegrationTest extends AbstractServiceIntegrationTest {
 
         boolean exist = iUserService.existUserWithUserNameOrEmail("985478542157","985478542155");
         Assert.assertFalse(exist);
+
+
+    }
+
+
+    @Test
+    public  void updateUserPassword_should_return_the_user_with_the_new_password(){
+
+        User user = createUser(testName);
+
+        Assert.assertNotNull(user);
+        Assert.assertNotNull(user.getId());
+
+        String newPassword = UUID.randomUUID().toString();
+
+        User retrievedUser = iUserService.upadateUserPassword(user.getId(),newPassword);
+
+        Assert.assertNotNull(retrievedUser);
+        Assert.assertEquals(user.getId(),retrievedUser.getId());
+        Assert.assertEquals(retrievedUser.getPassword(),newPassword);
+
+
 
 
     }
