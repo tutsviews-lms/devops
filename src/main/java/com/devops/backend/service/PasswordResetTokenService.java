@@ -60,8 +60,10 @@ public class PasswordResetTokenService {
             passwordResetToken = new PasswordResetToken(token, user, localDateTime, expirationInMinutes);
             passwordResetTokenRepository.save(passwordResetToken);
             LOG.info("Successful created PasswordResetToken {} for user {} .", token, user.getUsername());
+        }else{
+            LOG.warn("cannot find user with email {}.", email);
         }
-        LOG.warn("cannot fing user with email {}.", email);
+
         return passwordResetToken;
     }
 }
