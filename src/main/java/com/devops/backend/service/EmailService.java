@@ -1,6 +1,7 @@
 package com.devops.backend.service;
 
-import com.devops.web.domain.frontend.FeedbackPojo;
+import com.devops.web.domain.frontend.Feedback;
+
 import org.springframework.mail.SimpleMailMessage;
 
 /**
@@ -12,7 +13,7 @@ public interface EmailService {
      * Sends an email with the content of the Feedback Pojo
      * @param feedbackPojo the feedback Pojo
      */
-    public void sendFeedbackEmail(FeedbackPojo feedbackPojo);
+    public void sendFeedbackEmail(Feedback feedbackPojo);
 
     /**
      * Sends an email with the content of the Simple Mail Message pojo

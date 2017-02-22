@@ -3,7 +3,7 @@ package com.devops.web.domain.frontend;
 /**
  * Created by IBS on 01/02/2017.
  */
-public class FeedbackPojo {
+public class Feedback {
 
     private static final Long serialVersionUID = 1L;
 
@@ -47,7 +47,7 @@ public class FeedbackPojo {
 
     @Override
     public String toString() {
-        return "FeedbackPojo{" +
+        return "Feedback{" +
                 "email='" + email + '\'' +
                 ", firsName='" + firsName + '\'' +
                 ", lastName='" + lastName + '\'' +

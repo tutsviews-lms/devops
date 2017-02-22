@@ -1,7 +1,8 @@
 package com.devops.web.controllers;
 
 import com.devops.backend.service.EmailService;
-import com.devops.web.domain.frontend.FeedbackPojo;
+import com.devops.web.domain.frontend.Feedback;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,8 @@ public class ContactController {
     EmailService emailService;
 
     @ModelAttribute(FEEDBACK_MODEL_KEY)
-    public FeedbackPojo getFeedbackPojo(){
-        return new FeedbackPojo();
+    public Feedback getFeedbackPojo(){
+        return new Feedback();
     }
 
     @GetMapping("/contact")
@@ -40,7 +41,7 @@ public class ContactController {
     }
 
     @PostMapping("/contact")
-    public String postContact(@ModelAttribute FeedbackPojo feedbackPojo){
+    public String postContact(@ModelAttribute Feedback feedbackPojo){
         LOG.info(feedbackPojo.toString());
         emailService.sendFeedbackEmail(feedbackPojo);
         return "redirect:/";
