@@ -1,29 +1,26 @@
 package com.devops;
 
-import com.devops.backend.service.I18NService;
-import org.junit.Assert;
-import org.junit.Test;
+import com.devops.integration.Repository.UserRepositoryIntegrationTest;
+import com.devops.integration.Repository.PasswordTokenResetRepositoryIntegrationTest;
+import com.devops.integration.service.I18NServiceTest;
+import com.devops.integration.service.UserServiceIntegrationTest;
+import com.devops.unit.UserUtilsTest;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-@RunWith(SpringRunner.class)
+@RunWith(Suite.class)
 @SpringBootTest
+@WebAppConfiguration
+@ContextConfiguration
+@ActiveProfiles(profiles={"test"})
+@Suite.SuiteClasses({ UserRepositoryIntegrationTest.class, I18NServiceTest.class, com.devops.integration.Repository.UserServiceIntegrationTest.class,
+        UserServiceIntegrationTest.class, PasswordTokenResetRepositoryIntegrationTest.class, UserUtilsTest.class})
 public class DevopsApplicationTests {
 
-	@Autowired
-	I18NService i18NService;
-
-	@Test
-	public void i18nService_should_return_right_message_from_an_idMessage() {
-		String messageId = "index.main.collout";
-		String messageValue = "Bootstrap starter template";
-		Assert.assertEquals(messageValue, i18NService.getMessage(messageId));
-	}
 
 }

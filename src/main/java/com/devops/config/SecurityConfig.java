@@ -1,11 +1,18 @@
 package com.devops.config;
 
+import com.devops.backend.service.UserSecurityService;
+import com.devops.web.controllers.ForgotmyPasswordController;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.security.SecureRandom;
 
 /**
  * Created by ALadin Zaier PC IBS on 06/02/2017.
@@ -13,6 +20,19 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+
+    @Autowired
+    UserSecurityService userSecurityService;
+
+    /* The Encryption salt */
+    private static final String SALT = "ùa:dzap;wa/*zdaldinoù^";
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder(12, new SecureRandom(SALT.getBytes()));
+    }
+
 
     private static final String[] PUBLIC_MATCHERS = {
             "/webjars/**",
@@ -22,11 +42,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/",
             "/about/**",
             "/contact/**",
-            "/error/**/*"
+            "/error/**/*",
+            ForgotmyPasswordController.FORGOT_PASSWORD_URL_MAPPING,
+            ForgotmyPasswordController.CHANGE_PASSWORD_URL
     };
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable();
+
         http
                 .authorizeRequests()
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
@@ -41,10 +66,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+
         auth
-                .inMemoryAuthentication()
-                .withUser("user").password("password")
-                .roles("USER");
+                .userDetailsService(userSecurityService)
+                .passwordEncoder(passwordEncoder());
     }
 
 }
