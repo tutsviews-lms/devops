@@ -8,7 +8,9 @@ import com.devops.web.domain.frontend.BasicAccountPayload;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 import uk.co.jemos.podam.api.PodamFactory;
@@ -23,6 +25,9 @@ public class UserUtilsTest extends AbstractTest {
 
     private static final long dummyUserId = 1234;
     private PodamFactory podamFactory;
+
+    @Rule
+    public TestName testName = new TestName();
 
     private MockHttpServletRequest mockHttpServletRequest;
 
@@ -47,6 +52,8 @@ public class UserUtilsTest extends AbstractTest {
     @Test
     public void testFromWebUserToDomainUser(){
         BasicAccountPayload webUser = podamFactory.manufacturePojoWithFullData(BasicAccountPayload.class);
+        webUser.setEmail(testName.getMethodName()+"@tutsviews.fr");
+
         User user = UserUtils.fromWebUserToDomainUser(webUser);
 
         Assert.assertEquals(webUser.getUsername(), user.getUsername());
