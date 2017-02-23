@@ -17,7 +17,7 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">x</span>
                     </button>
-                    <p th:text="#{signup.message.error}" class="text-center"/>
+                    <p th:text="#{signup.message.success}" class="text-center"/>
                 </div>
 
                 <div th:if="${signedUp == 'false'}"
@@ -25,7 +25,7 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">x</span>
                     </button>
-                    <p th:text="#{signup.message.success}" class="text-center"/>
+                    <p th:text="${message}" class="text-center"/>
 
                 </div>
 
@@ -61,7 +61,7 @@
                         <div class="form-group">
                             <div th:if="${duplicatedUsername}">
                                 <label for="username"
-                                       th:text="#{signup.form.error.username.already.exists}"></label>
+                                       th:text="#{signup.form.error.username.already.exist}"></label>
                                 <input type="text" id="username" th:field="*{username}"
                                        class="form-control fieldError" />
                             </div>
@@ -74,7 +74,7 @@
 
                         <div class="form-group">
                             <div th:if="${duplicatedEmail}">
-                                <label for="email" th:text="#{signup.form.error.email.already.exists}" ></label>
+                                <label for="email" th:text="#{signup.form.error.email.already.exist}" ></label>
                                 <input type="email" id="email" th:field="*{email}" class="form-control fieldError"/>
                             </div>
                             <div th:if="${duplicatedEmail == null}">
@@ -147,6 +147,8 @@
                         </div>
 
                         <!-- Additional HTML form fields for Pro Account subscription -->
+
+                        <hr/>
                         <div th:if="${#httpServletRequest.getParameter('planId') == '2'}">
                             <div class="form-group">
                                 <label for="cardNumber" th:text="#{signup.form.credit.card.number}"></label>

@@ -25,4 +25,8 @@ public interface IUserService {
     @Transactional
     User upadateUserPassword(long userId, String newPassword);
 
+    User findByUserName(String userName);
+
+    User findByEmail(String email);
+
 }

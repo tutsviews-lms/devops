@@ -1,6 +1,7 @@
 package com.devops.web.domain.frontend;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import java.io.Serializable;
 
@@ -21,7 +22,7 @@ public class BasicAccountPayload implements Serializable {
     private String email;
     @NotNull
     private String username;
-    @NotNull
+    @NotEmpty(message = "password cannot be empty")
     private String password;
     @NotNull
     private String confirmedPassword;
