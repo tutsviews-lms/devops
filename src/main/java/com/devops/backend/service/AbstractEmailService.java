@@ -1,6 +1,7 @@
 package com.devops.backend.service;
 
-import com.devops.web.domain.frontend.FeedbackPojo;
+import com.devops.web.domain.frontend.Feedback;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 
@@ -17,7 +18,7 @@ public abstract class AbstractEmailService implements EmailService {
      * @param feedbackPojo
      * @return
      */
-    protected SimpleMailMessage prepareSimpleMailMessageFromFeedbackPojo(FeedbackPojo feedbackPojo){
+    protected SimpleMailMessage prepareSimpleMailMessageFromFeedbackPojo(Feedback feedbackPojo){
        SimpleMailMessage message = new SimpleMailMessage();
        message.setTo(defaultToAddress);
        message.setFrom(feedbackPojo.getEmail());
@@ -27,7 +28,7 @@ public abstract class AbstractEmailService implements EmailService {
     }
 
     @Override
-    public void sendFeedbackEmail(FeedbackPojo feedbackPojo) {
+    public void sendFeedbackEmail(Feedback feedbackPojo) {
         sendGenericEmailMessage(prepareSimpleMailMessageFromFeedbackPojo(feedbackPojo));
     }
 }

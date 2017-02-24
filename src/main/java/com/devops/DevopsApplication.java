@@ -1,11 +1,8 @@
 package com.devops;
 
-import com.devops.backend.persistence.domain.backend.Role;
-import com.devops.backend.persistence.domain.backend.User;
-import com.devops.backend.persistence.domain.backend.UserRole;
+import com.devops.backend.service.PlanService;
 import com.devops.backend.service.contract.IUserService;
-import com.devops.enums.PlanEnum;
-import com.devops.enums.RoleEnum;
+import com.devops.utils.PlanUtils;
 import com.devops.utils.UserUtils;
 
 import org.slf4j.Logger;
@@ -17,9 +14,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @SpringBootApplication
 public class DevopsApplication extends SpringBootServletInitializer implements CommandLineRunner {
@@ -34,6 +28,9 @@ public class DevopsApplication extends SpringBootServletInitializer implements C
 
     @Autowired
     IUserService userService;
+
+    @Autowired
+    PlanService planService;
 
     @Value("${webmaster.username}")
     private String webmasterUsername ;
@@ -55,26 +52,20 @@ public class DevopsApplication extends SpringBootServletInitializer implements C
         LOG.info("Webmaster password : {}", webmasterPassword);
         LOG.info("Webmaster email : {}", webmasterEmail);
 
-        if (!userService.existUserWithUserNameOrEmail(webmasterUsername,webmasterEmail)) {
-
-        User user = UserUtils.createBasicUser(webmasterUsername,webmasterEmail);
-            user.setPassword(webmasterPassword);
-
-        Set<UserRole> userRoles = new HashSet<>();
-        UserRole userRole = new UserRole(user, new Role(RoleEnum.ADMIN));
-        userRoles.add(userRole);
-        LOG.info("Creating user with value {} as username", user.getUsername());
-        userService.createUser(user, PlanEnum.PRO, userRoles);
-        LOG.info("User with value {} as username created", user.getUsername());
-
-        }
+        UserUtils.createWebMasterUserIfNonExisting(userService,webmasterUsername,webmasterEmail,webmasterPassword);
+        PlanUtils.createNonExistingPlans(planService);
 
     }
+
+
+
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(DevopsApplication.class);
-
-
     }
+
+
+
+
 }

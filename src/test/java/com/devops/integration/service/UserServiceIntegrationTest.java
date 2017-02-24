@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.UUID;
 
@@ -13,6 +15,10 @@ import java.util.UUID;
  * Created by ALadin Zaier PC IBS on 15/02/2017.
  */
 public class UserServiceIntegrationTest extends AbstractServiceIntegrationTest {
+
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
 
     @Rule
@@ -46,9 +52,11 @@ public class UserServiceIntegrationTest extends AbstractServiceIntegrationTest {
 
 
     @Test
-    public  void updateUserPassword_should_return_the_user_with_the_new_password(){
+    public  void updateUserPassword_should_return_the_user_with_a_different_password(){
 
         User user = createUser(testName);
+
+        String oldPassword = user.getPassword();
 
         Assert.assertNotNull(user);
         Assert.assertNotNull(user.getId());
@@ -56,10 +64,11 @@ public class UserServiceIntegrationTest extends AbstractServiceIntegrationTest {
         String newPassword = UUID.randomUUID().toString();
 
         User retrievedUser = iUserService.upadateUserPassword(user.getId(),newPassword);
+        String retrivedPassword = retrievedUser.getPassword();
 
         Assert.assertNotNull(retrievedUser);
         Assert.assertEquals(user.getId(),retrievedUser.getId());
-        Assert.assertEquals(retrievedUser.getPassword(),newPassword);
+        Assert.assertNotEquals(retrivedPassword,oldPassword);
 
 
 

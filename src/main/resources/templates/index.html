@@ -11,9 +11,32 @@
 <div class="container">
 
     <div class="starter-template">
-        <h1 th:text="#{index.main.collout}">enter a text here</h1>
-        <p class="lead">Use this document as a way to quickly start any new project. All you get is this text and a
-            mostly barebones HTML document.</p>
+        <h1 th:text="#{index.main.title}">enter a text here</h1>
+        <p class="lead">Welcome to Tutsviews. The best technology learning management platform you count
+            on to stay relevant, with tools that measure your skills and solve your
+            problems faster.</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="well">
+                <h2 class="text-center" th:text="#{index.basic.membership}"></h2>
+                <h4 th:text="#{index.h4.basic.membership}"></h4>
+                <br/>
+                <a class="btn btn-primary btn-lg btn-block"
+                   th:href="@{/signup?planId=1}"
+                   th:text="#{index.basic.signup.button}"></a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="well">
+                <h2 class="text-center" th:text="#{index.pro.membership}"></h2>
+                <h4 th:text="#{index.h4.pro.membership}"></h4>
+                <a class="btn btn-success btn-lg btn-block"
+                   th:href="@{/signup?planId=2}"
+                   th:text="#{index.pro.signup.button}"></a>
+            </div>
+        </div>
     </div>
 
 </div><!-- /.container -->

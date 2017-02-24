@@ -96,12 +96,25 @@ public class UserService implements IUserService {
         User user = userRepository.findOne(userId);
 
         if (user != null) {
-            user.setPassword(newPassword);
+
+            String encryptedPassword = passwordEncoder.encode(newPassword);
+            user.setPassword(encryptedPassword);
+
             user = userRepository.save(user);
             LOG.info("Password have been succesfully modified ! with value = {}",newPassword);
         }
 
         return user;
+    }
+
+    @Override
+    public User findByUserName(String userName) {
+        return userRepository.findUserByUsername(userName);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
 
 
