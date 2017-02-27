@@ -5,6 +5,7 @@ import com.devops.backend.persistence.domain.backend.Role;
 import com.devops.backend.persistence.domain.backend.User;
 import com.devops.backend.persistence.domain.backend.UserRole;
 import com.devops.backend.service.PlanService;
+import com.devops.backend.service.S3Service;
 import com.devops.backend.service.contract.IUserService;
 import com.devops.enums.PlanEnum;
 import com.devops.enums.RoleEnum;
@@ -21,10 +22,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,6 +60,8 @@ public class SignupController {
 
     private static final String ERROR_MESSAGE_KEY = "message";
 
+    @Autowired
+    private S3Service s3Service;
 
     @Autowired
     private PlanService planService;
@@ -79,6 +84,7 @@ public class SignupController {
 
     @PostMapping(SIGNUP_URL_MAPPING)
     public String accountRegistration(@RequestParam(name = "planId", required = true) int planId,
+                                      @RequestParam(name = "file", required = false) MultipartFile file,
                                       @ModelAttribute(SIGNUP_PAYLOAD_MODEL_KEY) @Valid ProAccountPayload payload,
                                       ModelMap model) throws IOException {
 
@@ -120,6 +126,21 @@ public class SignupController {
         User user = UserUtils.fromWebUserToDomainUser(payload);
 
 
+        // Stores the profile image on Amazon S3 and stores the URL in the user's record
+        if (file != null && !file.isEmpty()) {
+
+            String profileImageUrl = s3Service.storeProfileImage(file, payload.getUsername());
+            if (profileImageUrl != null) {
+                user.setProfileImageUrl(profileImageUrl);
+            } else {
+                LOG.warn("There was a problem uploading the profile image to S3. The user's profile will" +
+                        " be created without the image");
+            }
+
+        }
+
+
+
         // Sets the Plan and the Roles (depending on the chosen plan)
         LOG.debug("Retrieving plan from the database");
         Plan selectedPlan = planService.findPlanById(planId);
@@ -141,6 +162,18 @@ public class SignupController {
             registeredUser = userService.createUser(user, PlanEnum.BASIC, roles);
         } else {
             roles.add(new UserRole(user, new Role(RoleEnum.PRO)));
+
+            if (StringUtils.isEmpty(payload.getCardCode()) ||
+                    StringUtils.isEmpty(payload.getCardNumber()) ||
+                    StringUtils.isEmpty(payload.getCardMonth()) ||
+                    StringUtils.isEmpty(payload.getCardYear() )) {
+                LOG.error("One or more information about the credit card are empty");
+                model.addAttribute(SIGNED_UP_MESSAGE_KEY, "false");
+                model.addAttribute(ERROR_MESSAGE_KEY, "One or more Credit card information are empty");
+                return SIGNUP_VIEW_NAME;
+            }
+
+
             registeredUser = userService.createUser(user, PlanEnum.PRO, roles);
             LOG.debug(payload.toString());
         }
