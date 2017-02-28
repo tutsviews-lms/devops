@@ -32,18 +32,27 @@ public class ApplicationConfig {
     @Value("${aws.s3.profile}")
     private String awsProfileName;
 
-
+    @Value("${stripe.test.private.key}")
+    private String stripeDevKey;
 
     @Bean
     public AmazonS3Client s3Client(){
 
         LOG.error("the aws profile name is {} ",awsProfileName);
 
+
+
         AWSCredentials credentials = new ProfileCredentialsProvider(awsProfileName).getCredentials();
         AmazonS3Client s3Client = new AmazonS3Client(credentials);
         Region region = Region.getRegion(Regions.EU_CENTRAL_1);
         s3Client.setRegion(region);
         return s3Client;
+    }
+
+
+    @Bean
+    public String stripeKey(){
+        return stripeDevKey;
     }
 }
 

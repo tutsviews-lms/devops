@@ -1,8 +1,9 @@
 package com.devops;
 
-import com.devops.integration.Repository.UserRepositoryIntegrationTest;
 import com.devops.integration.Repository.PasswordTokenResetRepositoryIntegrationTest;
+import com.devops.integration.Repository.UserRepositoryIntegrationTest;
 import com.devops.integration.service.I18NServiceTest;
+import com.devops.integration.service.StripeSerivceIntegrationTest;
 import com.devops.integration.service.UserServiceIntegrationTest;
 import com.devops.unit.UserUtilsTest;
 
@@ -19,7 +20,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @ContextConfiguration
 @ActiveProfiles(profiles={"test"})
 @Suite.SuiteClasses({ UserRepositoryIntegrationTest.class, I18NServiceTest.class, com.devops.integration.Repository.UserServiceIntegrationTest.class,
-        UserServiceIntegrationTest.class, PasswordTokenResetRepositoryIntegrationTest.class, UserUtilsTest.class})
+        UserServiceIntegrationTest.class, PasswordTokenResetRepositoryIntegrationTest.class, UserUtilsTest.class, StripeSerivceIntegrationTest.class})
 public class DevopsApplicationTests {
 
 

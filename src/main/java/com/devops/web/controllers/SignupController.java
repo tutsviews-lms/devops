@@ -6,6 +6,7 @@ import com.devops.backend.persistence.domain.backend.User;
 import com.devops.backend.persistence.domain.backend.UserRole;
 import com.devops.backend.service.PlanService;
 import com.devops.backend.service.S3Service;
+import com.devops.backend.service.StripeService;
 import com.devops.backend.service.contract.IUserService;
 import com.devops.enums.PlanEnum;
 import com.devops.enums.RoleEnum;
@@ -59,6 +60,9 @@ public class SignupController {
     private static final String DUPLICATED_EMAIL_KEY = "duplicatedEmail";
 
     private static final String ERROR_MESSAGE_KEY = "message";
+
+    @Autowired
+    StripeService stripeService;
 
     @Autowired
     private S3Service s3Service;
@@ -173,6 +177,9 @@ public class SignupController {
                 return SIGNUP_VIEW_NAME;
             }
 
+            String stripeCustomerId = stripeService.createACustomer(payload.getCardNumber(),payload.getCardCode(),payload.getCardMonth(),payload.getCardYear());
+
+            user.setStripeCustomerId(stripeCustomerId);
 
             registeredUser = userService.createUser(user, PlanEnum.PRO, roles);
             LOG.debug(payload.toString());
