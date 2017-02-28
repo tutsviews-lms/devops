@@ -62,19 +62,19 @@ public class StripeService implements IStripeService {
 
         } catch (AuthenticationException e) {
             LOG.error("An Authentification exception has occured while creating the stripe custormer ",e);
-            throw new com.devops.exceptions.StripeException();
+            throw new com.devops.exceptions.StripeException(e);
         } catch (InvalidRequestException e) {
             LOG.error("An invalid request exception has occured while creating the stripe custormer ",e);
-            throw new com.devops.exceptions.StripeException();
+            throw new com.devops.exceptions.StripeException(e);
         } catch (APIConnectionException e) {
             LOG.error("An api connection exception has occured while creating the stripe custormer ",e);
-            throw new com.devops.exceptions.StripeException();
+            throw new com.devops.exceptions.StripeException(e);
         } catch (CardException e) {
             LOG.error("A card exception has occured while creating the stripe custormer ",e);
-            throw new com.devops.exceptions.StripeException();
+            throw new com.devops.exceptions.StripeException(e);
         } catch (APIException e) {
             LOG.error("An api exception has occured while creating the stripe custormer ",e);
-            throw new com.devops.exceptions.StripeException();
+            throw new com.devops.exceptions.StripeException(e);
         }
 
 

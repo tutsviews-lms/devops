@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.model.AccessControlList;
 import com.amazonaws.services.s3.model.GroupGrantee;
 import com.amazonaws.services.s3.model.Permission;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.devops.exceptions.S3Exception;
 
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -46,13 +47,23 @@ public class S3Service {
     private AmazonS3Client s3Client;
 
 
-    public String storeProfileImage(MultipartFile uploadedFile, String username) throws IOException {
+    /**
+     *
+     * @param uploadedFile
+     * @param username
+     * @return The url of the uploaded image
+     * @throws S3Exception
+     */
+    public String storeProfileImage(MultipartFile uploadedFile, String username) {
 
         String profileImageUrl = null;
 
+        try {
+
         if (uploadedFile != null && !uploadedFile.isEmpty()) {
 
-            byte[] bytes = uploadedFile.getBytes();
+            byte[] bytes = new byte[0];
+            bytes = uploadedFile.getBytes();
 
             File tempFolderToStoreImage = new File(tempImageStore + File.separatorChar + username);
 
@@ -83,6 +94,10 @@ public class S3Service {
             tempFileToStoreImage.delete();
         }
 
+        } catch (IOException e) {
+            throw new S3Exception(e);
+        }
+
 
         return profileImageUrl;
 
@@ -108,9 +123,6 @@ public class S3Service {
 
         return bucketUrl;
     }
-
-
-
 
 
     private String storeProfileImageToS3(File resource, String username) {
@@ -142,6 +154,7 @@ public class S3Service {
             } catch (AmazonClientException ace) {
                 LOG.error("A client exception occurred while trying to store the profile" +
                         " image {} on S3. The profile image won't be stored", resource.getAbsolutePath(), ace);
+                throw new S3Exception(ace);
             }
         }
 
