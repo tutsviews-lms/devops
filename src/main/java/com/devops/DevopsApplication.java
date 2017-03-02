@@ -32,8 +32,8 @@ public class DevopsApplication extends SpringBootServletInitializer implements C
     @Autowired
     PlanService planService;
 
-    @Value("${webmaster.username}")
-    private String webmasterUsername ;
+//    @Value("${webmaster.username}")
+    private String webmasterUsername ="Aladin";
 
     @Value("${webmaster.password}")
     private String webmasterPassword;
