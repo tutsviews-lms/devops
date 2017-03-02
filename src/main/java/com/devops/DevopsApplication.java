@@ -35,11 +35,11 @@ public class DevopsApplication extends SpringBootServletInitializer implements C
 //    @Value("${webmaster.username}")
     private String webmasterUsername ="Aladin";
 
-    @Value("${webmaster.password}")
-    private String webmasterPassword;
+//    @Value("${webmaster.password}")
+    private String webmasterPassword = "secret";
 
-    @Value("${webmaster.email}")
-    private String webmasterEmail;
+//    @Value("${webmaster.email}")
+    private String webmasterEmail ="zaier.alaeddine@gmail.com";
 
     public static void main(String[] args) {
         SpringApplication.run(DevopsApplication.class, args);
