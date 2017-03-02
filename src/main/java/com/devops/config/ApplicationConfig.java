@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EntityScan("com.devops.backend.persistence.domain.backend")
 @EnableTransactionManagement
 @PropertySource("classpath:/application.properties")
+@PropertySource("classpath:/application-prod.properties")
 public class ApplicationConfig {
 
     /** The application logger */
